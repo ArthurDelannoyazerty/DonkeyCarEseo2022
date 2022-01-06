@@ -1,38 +1,29 @@
-from __future__ import print_function
-from __future__ import division
 import cv2 as cv
-import argparse
-
-alpha_slider_max = 254
-beta_slider_max = 254
-title_window = 'treshhold'
-
-def on_trackbar(val):
-    #alpha = val / alpha_slider_max
-    ret,dst = cv.threshold(img,val,255,cv.THRESH_BINARY)
-    cv.imshow(title_window, dst)
+import sys
 
 
-def trackbar_adaptive(val):
-    #alpha = val / alpha_slider_max
-    ret,dst = cv.Canny(img,100,200)
-    cv.imshow(title_window, dst)
 
-img = cv.imread(cv.samples.findFile("original.jpg"))
-if img is None:
+
+##load images
+origin = cv.imread(cv.samples.findFile("original.jpg"))
+if origin is None:
     sys.exit("Could not read the image.")
 
+mask = cv.imread(cv.samples.findFile("mask.png"))
+if mask is None:
+    sys.exit("Could not read the image.")
 
-cv.namedWindow(title_window)
-trackbar_name = 'tresh_binary x %d' % alpha_slider_max
-cv.createTrackbar(trackbar_name, title_window , 0, alpha_slider_max, on_trackbar)
+cv.imshow("0 - original", origin)
 
+##ajout masque
+wMask = cv.bitwise_and(origin,mask)
+cv.imshow("1 - mask", wMask)
 
-trackbar_name2 = 'beta x %d' % beta_slider_max
-cv.createTrackbar(trackbar_name2, title_window , 0, beta_slider_max, trackbar_adaptive)
+##niveau de gris
+gray = cv.cvtColor(wMask, cv.COLOR_BGR2GRAY)
+cv.imshow("2 - Color conversion brg to gray + mask", gray)
 
-
-# Show some stuff
-on_trackbar(0)
-# Wait until user press some key
-cv.waitKey()
+##threshold avec moyenne
+adapt = cv.adaptiveThreshold(gray, 255, cv.ADAPTIVE_THRESH_MEAN_C, cv.THRESH_BINARY_INV, 11, 2)
+cv.imshow("3 - Color conversion brg to gray + adaptive tresh mean + mask", adapt)
+k = cv.waitKey(0)

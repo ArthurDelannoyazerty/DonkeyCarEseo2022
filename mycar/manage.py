@@ -703,6 +703,7 @@ def drive(cfg, model_path=None, use_joystick=False, model_type=None,
         ctr.set_tub(tub_writer.tub)
         ctr.print_controls()
 
+
     #run the vehicle for 20 seconds
     V.start(rate_hz=cfg.DRIVE_LOOP_HZ, max_loop_count=cfg.MAX_LOOPS)
 

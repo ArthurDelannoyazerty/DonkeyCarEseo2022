@@ -5,7 +5,7 @@ import numpy as np
 
 
 ##load imagesv
-origin = cv.imread(cv.samples.findFile("original.jpg"))
+origin = cv.imread(cv.samples.findFile("original_2k22.jpg"))
 if origin is None:
     sys.exit("Could not read the image.")
 
@@ -17,28 +17,29 @@ cv.imshow("0 - original", origin)
 
 
 
-y=0
-x=0
-h=100
-w=200
+y=43
+x=25
+h=76
+w=180
 crop_img = origin[y:y+h, x:x+w]
 cv.imshow("0.1 - masque numpy", crop_img)
 
 ##ajout masque
 e1 = cv.getTickCount()
 
-wMask = cv.bitwise_and(origin,mask)
+#wMask = cv.bitwise_and(origin,mask)
+
 
 e2 = cv.getTickCount()
 t = (e2 - e1)/cv.getTickFrequency()
 print( "ajout mask  : ",t)
 
-cv.imshow("1 - mask", wMask)
+#cv.imshow("1 - mask", wMask)
 
 ##niveau de gris
 e1 = cv.getTickCount()
 
-gray = cv.cvtColor(wMask, cv.COLOR_BGR2GRAY)
+gray = cv.cvtColor(crop_img, cv.COLOR_BGR2GRAY)
 cv.imshow("2 - gray", gray)
 
 e2 = cv.getTickCount()
@@ -57,8 +58,14 @@ cv.imshow("2.1 - noir/blanc", blackAndWhiteImage)
 
 ##erosion
 e1 = cv.getTickCount()
-kernel = np.ones((5,5),np.uint8)
+
+kernel_size = 3     #3,5,7 aua choix
+#kernel = np.ones((kernel_size,kernel_size),np.uint8)
+#kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE,(kernel_size,kernel_size))
+kernel = cv.getStructuringElement(cv.MORPH_CROSS,(kernel_size,kernel_size))
+
 erosion = cv.erode(blackAndWhiteImage,kernel,iterations = 1)
+#erosion = cv.erode(blackAndWhiteImage,cv.MORPH_OPEN,kernel)
 
 e2 = cv.getTickCount()
 t = (e2 - e1)/cv.getTickFrequency()

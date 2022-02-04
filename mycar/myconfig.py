@@ -343,3 +343,6 @@
 # STOP_SIGN_DETECTOR = False
 # STOP_SIGN_MIN_SCORE = 0.2
 # STOP_SIGN_SHOW_BOUNDING_BOX = True
+
+#Opencv : traitement d'image
+OPENCV_ACTIVATED = True

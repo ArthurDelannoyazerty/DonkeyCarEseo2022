@@ -702,7 +702,10 @@ def drive(cfg, model_path=None, use_joystick=False, model_type=None,
         print("You can now move your joystick to drive your car.")
         ctr.set_tub(tub_writer.tub)
         ctr.print_controls()
-
+    
+    if cfg.OPENCV_ACTIVATED :
+        from donkeycar.parts.dd_cvImage import DD_CvImage
+        V.add(DD_CvImage, inputs=['cam/image_array'], outputs=['jpg/bin'])
 
     #run the vehicle for 20 seconds
     V.start(rate_hz=cfg.DRIVE_LOOP_HZ, max_loop_count=cfg.MAX_LOOPS)

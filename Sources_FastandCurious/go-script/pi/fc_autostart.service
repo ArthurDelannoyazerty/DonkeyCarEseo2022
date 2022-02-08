@@ -1,0 +1,12 @@
+[Unit]
+Description=F&C Donkeycar Autostart service
+
+[Service]
+Type=simple
+User=pi
+ExecStart=/bin/sh -c "./env/bin/python ./projects/go-script/pi/autostart.py"
+WorkingDirectory=/home/pi
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

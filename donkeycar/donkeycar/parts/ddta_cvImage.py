@@ -5,7 +5,7 @@ class DDTA_CvImage(object):
 
     def __init__(self):
         #self.trapezoidal_mask = None
-        print("DDTA : Image OpenCV Part activated")
+        print("DDTA : Image OpenCV Part activated (youpi!)")
 
 
     def run(self, image):

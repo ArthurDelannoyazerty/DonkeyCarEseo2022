@@ -1,12 +1,11 @@
 import cv2 as cv
 
 
-
-class DD_CvImage(object):
+class DDTA_CvImage(object):
 
     def __init__(self):
         #self.trapezoidal_mask = None
-        print("DD : Image OpenCV Part activated")
+        print("DDTA : Image OpenCV Part activated")
 
 
     def run(self, image):

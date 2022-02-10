@@ -5,13 +5,19 @@ class DDTA_CvImage(object):
 
     def __init__(self):
         #self.trapezoidal_mask = None
+<<<<<<< HEAD
         print("DDTA : Image OpenCV Part activated (youpi!)")
+=======
+        print("------------ DDTA : Image OpenCV Part activated")
+>>>>>>> b71a7511809d3754d58bf7c1ad9c1cd713a9da98
 
 
     def run(self, image):
         if image is None or image[0] is None:
             return image
         
+        image = image.copy()
+        originalimage = image
         
         #crop basé sur original_2k22 dimensions : 216*162
         y=43

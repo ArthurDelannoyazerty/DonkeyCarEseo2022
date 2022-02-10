@@ -183,10 +183,11 @@ def drive(cfg, model_path=None, use_joystick=False, model_type=None,
             
         V.add(cam, inputs=inputs, outputs=outputs, threaded=threaded)
 
-
+    # DDTA : OpenCv part
     if cfg.OPENCV_ACTIVATED :
         from donkeycar.parts.ddta_cvImage import DDTA_CvImage
-        V.add(DDTA_CvImage, inputs=['cam/image_array'], outputs=['cam/image_array'])
+        OpenCvtest = DDTA_CvImage()
+        V.add(OpenCvtest, inputs=['cam/image_array'], outputs=['cam/image_array'])
 
 
 

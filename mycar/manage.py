@@ -183,6 +183,14 @@ def drive(cfg, model_path=None, use_joystick=False, model_type=None,
             
         V.add(cam, inputs=inputs, outputs=outputs, threaded=threaded)
 
+    # DDTA : OpenCv part
+    if cfg.OPENCV_ACTIVATED :
+        from donkeycar.parts.ddta_cvImage import DDTA_CvImage
+        OpenCvtest = DDTA_CvImage()
+        V.add(OpenCvtest, inputs=['cam/image_array'], outputs=['cam/image_array'])
+
+
+
     #This web controller will create a web server that is capable
     #of managing steering, throttle, and modes, and more.
     ctr = LocalWebController(port=cfg.WEB_CONTROL_PORT, mode=cfg.WEB_INIT_MODE)
@@ -702,8 +710,8 @@ def drive(cfg, model_path=None, use_joystick=False, model_type=None,
         print("You can now move your joystick to drive your car.")
         ctr.set_tub(tub_writer.tub)
         ctr.print_controls()
-
-
+    
+    
     #run the vehicle for 20 seconds
     V.start(rate_hz=cfg.DRIVE_LOOP_HZ, max_loop_count=cfg.MAX_LOOPS)
 

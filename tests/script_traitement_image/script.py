@@ -28,14 +28,14 @@ args = parser.parse_args()
 """
 
 ##load imagesv
-origin = cv.imread(cv.samples.findFile("1091_cam_image_array_.jpg"))
+origin = cv.imread(cv.samples.findFile("1073_cam_image_array_.jpg"))
 if origin is None:
     sys.exit("Could not read the image.")
-
+"""
 mask = cv.imread(cv.samples.findFile("mask.png"))
 if mask is None:
     sys.exit("Could not read the image.")
-
+"""
 cv.imshow("0 - original", origin)
 
 
@@ -98,7 +98,15 @@ t = (e2 - e1)/cv.getTickFrequency()
 print( "tozero  : " ,t)
 
 
+# edge
+e1 = cv.getTickCount()
+edges = cv.Canny(thresholdImage,100,200)
 
+e2 = cv.getTickCount()
+t = (e2 - e1)/cv.getTickFrequency()
+print( "edges  : " ,t)
+
+cv.imshow("2.0.6 - canny detection", edges)
 
 ##noir & blanc --> fait par threshold
 """
@@ -119,7 +127,7 @@ kernel = np.ones((kernel_size,kernel_size),np.uint8)
 #kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE,(kernel_size,kernel_size))
 #kernel = cv.getStructuringElement(cv.MORPH_CROSS,(kernel_size,kernel_size))
 
-erosion = cv.erode(thresholdImage,kernel,iterations = 1)
+erosion = cv.erode(edges,kernel,iterations = 1)
 dilatation_dst = cv.dilate(erosion, kernel, iterations=1)
 #erosion = cv.erode(blackAndWhiteImage,cv.MORPH_OPEN,kernel)
 
@@ -129,14 +137,7 @@ print( "erosion  : ", t )
 
 cv.imshow("2.2 - erosion", erosion)
 
-# edge
-e1 = cv.getTickCount()
-edges = cv.Canny(erosion,10,200)
 
-t = (e2 - e1)/cv.getTickFrequency()
-print( "edges  : " ,t)
-
-cv.imshow("2.0.6 - canny detection", edges)
 
 
 

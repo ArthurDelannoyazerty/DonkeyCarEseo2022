@@ -1,7 +1,12 @@
 #import argparse
 import cv2 as cv
 import sys
+from cv2 import threshold
+from cv2 import blur
 import numpy as np
+
+
+
 
 """
 max_value = 255
@@ -71,8 +76,47 @@ cv.imshow("2 - gray", gray)
 t = (e2 - e1)/cv.getTickFrequency()
 print( "gray  : " ,t)
 
-#blur
+
 """
+input_img = gray
+
+e1 = cv.getTickCount()
+
+contrast = 255
+brightness = 100
+if brightness != 0:
+    if brightness > 0:
+        shadow = brightness
+        highlight = 255
+    else:
+        shadow = 0
+        highlight = 255 + brightness
+    alpha_b = (highlight - shadow)/255
+    gamma_b = shadow
+    buf = cv.addWeighted(input_img, alpha_b, input_img, 0, gamma_b)
+else:
+    buf = input_img.copy()
+if contrast != 0:
+    f = float(131 * (contrast + 127)) / (127 * (131 - contrast))
+    alpha_c = f
+    gamma_c = 127*(1-f)
+    buf = cv.addWeighted(buf, alpha_c, buf, 0, gamma_c)
+        
+bright = buf
+
+e2 = cv.getTickCount()
+t = (e2 - e1)/cv.getTickFrequency()
+print( "bright  : " ,t)
+
+cv.imshow("2.? - brigth", bright)
+"""
+
+
+
+
+
+#blur
+
 e1 = cv.getTickCount()
 i=5
 blured = cv.GaussianBlur(gray, (i, i), 0)
@@ -81,11 +125,11 @@ t = (e2 - e1)/cv.getTickFrequency()
 print( "blur  : " ,t)
 
 cv.imshow("2.0.5 - bilateral filter", blured)
-"""
 
 
 
 #threshold
+"""
 e1 = cv.getTickCount()
 
 _,thresholdImage = cv.threshold(gray, 200, 255, type=cv.THRESH_TOZERO)
@@ -96,11 +140,13 @@ cv.imshow("2.1 - treshold tozero", thresholdImage)
 
 t = (e2 - e1)/cv.getTickFrequency()
 print( "tozero  : " ,t)
+"""
+
 
 
 # edge
 e1 = cv.getTickCount()
-edges = cv.Canny(thresholdImage,100,200)
+edges = cv.Canny(blured,100,200)
 
 e2 = cv.getTickCount()
 t = (e2 - e1)/cv.getTickFrequency()
@@ -119,7 +165,22 @@ print( "black & white  : ",t)
 
 cv.imshow("2.1 - noir/blanc", blackAndWhiteImage)
 """
+
+# adaptive threshold
+e1 = cv.getTickCount()
+thresholdImage = cv.adaptiveThreshold(edges, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 11, 2)
+
+e2 = cv.getTickCount()
+t = (e2 - e1)/cv.getTickFrequency()
+print( "adaptive  : " ,t)
+
+cv.imshow("2.0..x : adaptive threshold", thresholdImage)
+
+
+
+
 ##erosion/dilation
+"""
 e1 = cv.getTickCount()
 
 kernel_size = 2     #3,5,7 aua choix
@@ -136,14 +197,16 @@ t = (e2 - e1)/cv.getTickFrequency()
 print( "erosion  : ", t )
 
 cv.imshow("2.2 - erosion", erosion)
+"""
 
+## couleur
+e1 = cv.getTickCount()
+couleur = cv.cvtColor(edges, cv.COLOR_GRAY2RGB)
+cv.imshow("3", couleur)
 
-
-
-
-
-
-
+e2 = cv.getTickCount()
+t = (e2 - e1)/cv.getTickFrequency()
+print( "gray2rgb  : ", t )
 
 
 

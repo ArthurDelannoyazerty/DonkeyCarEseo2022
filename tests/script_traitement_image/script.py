@@ -33,7 +33,7 @@ args = parser.parse_args()
 """
 
 ##load imagesv
-origin = cv.imread(cv.samples.findFile("1073_cam_image_array_.jpg"))
+origin = cv.imread(cv.samples.findFile("1_arrivee_ok.jpg"))
 if origin is None:
     sys.exit("Could not read the image.")
 """

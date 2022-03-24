@@ -15,14 +15,14 @@ def is_arrivee(name_image) :
         sys.exit("Could not read the image.")
 
 
-    threshold_value = 120       #distance entre la couleur dominante detectée et la couleur target
+    threshold_value = 130       #distance entre la couleur dominante detectée et la couleur target
     target_R = 239              #couleur RGB target
     target_G = 219
     target_B = 90
 
-    y=97
+    y=76
     x=0
-    h=25
+    h=57
     w=215
     crop_img = origin[y:y+h, x:x+w]
 
@@ -52,7 +52,7 @@ nop = "nop"
 jpg = ".jpg"
 arrivee = "_arrivee_"
 txt=""
-for i in range(1,10):
+for i in range(1,15):
     if i<6:
         txt = str(i)+arrivee+nop+jpg
     else:

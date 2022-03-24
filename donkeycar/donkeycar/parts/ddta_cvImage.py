@@ -5,11 +5,7 @@ class DDTA_CvImage(object):
 
     def __init__(self):
         #self.trapezoidal_mask = None
-<<<<<<< HEAD
-        print("DDTA : Image OpenCV Part activated (youpi!)")
-=======
-        print("------------ DDTA : Image OpenCV Part activated")
->>>>>>> b71a7511809d3754d58bf7c1ad9c1cd713a9da98
+        print("DDTA : Image OpenCV Part activated")
 
 
     def run(self, image):
@@ -21,9 +17,9 @@ class DDTA_CvImage(object):
         
         #crop basé sur original_2k22 dimensions : 216*162
         y=43
-        x=25
+        x=0
         h=76
-        w=180
+        w=216
         crop_img = image[y:y+h, x:x+w]
 
         ##ajout masque

@@ -33,7 +33,7 @@ args = parser.parse_args()
 """
 
 ##load imagesv
-origin = cv.imread(cv.samples.findFile("1_arrivee_ok.jpg"))
+origin = cv.imread(cv.samples.findFile("circuit_normal1.jpg"))
 if origin is None:
     sys.exit("Could not read the image.")
 """
@@ -46,9 +46,9 @@ cv.imshow("0 - original", origin)
 
 
 y=43
-x=25
-h=76
-w=180
+x=0
+h=82
+w=215
 crop_img = origin[y:y+h, x:x+w]
 cv.imshow("0.1 - masque numpy", crop_img)
 
@@ -126,7 +126,10 @@ print( "blur  : " ,t)
 
 cv.imshow("2.0.5 - bilateral filter", blured)
 
-
+lower_black = np.array([0,0,0], dtype = "uint16")
+upper_black = np.array([70,70,70], dtype = "uint16")
+#black_mask = cv.inRange(blured, lower_black, upper_black)
+#cv.imshow('mask0',black_mask)
 
 #threshold
 """
@@ -210,8 +213,6 @@ print( "gray2rgb  : ", t )
 
 
 
-
-cv.waitKey()
 
 """
 cv.namedWindow(window_name)

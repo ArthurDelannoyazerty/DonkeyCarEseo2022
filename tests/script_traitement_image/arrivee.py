@@ -9,41 +9,58 @@ import numpy as np
 
 
 def is_arrivee(name_image) :
+
+
     ##load imagesv
     origin = cv.imread(cv.samples.findFile(name_image))
     if origin is None:
         sys.exit("Could not read the image.")
 
-
     threshold_value = 130       #distance entre la couleur dominante detectée et la couleur target
-    target_R = 239              #couleur RGB target
-    target_G = 219
-    target_B = 90
+    target_R = 143              #couleur RGB target
+    target_G = 143
+    target_B = 59
 
-    y=76
-    x=0
-    h=57
-    w=215
+    y=55
+    x=28
+    h=5
+    w=83
     crop_img = origin[y:y+h, x:x+w]
-
     ## dominant color detection
 
     a2D = crop_img.reshape(-1,crop_img.shape[-1])
     col_range = (256, 256, 256) # generically : a2D.max(0)+1
     a1D = np.ravel_multi_index(a2D.T, col_range)
-    dom_color = np.unravel_index(np.bincount(a1D).argmax(), col_range)
+    
+    a2D = []
+    echantillon_px = 1
+    
+    for i in range(0, a1D.size):
+        if (i % echantillon_px)==0:
+            a2D.append(a1D[i])
+
+    e1 = cv.getTickCount()
+    jsp = np.bincount(a2D).argmax()
+    dom_color = np.unravel_index(jsp, col_range)
+    e2 = cv.getTickCount()
+     
 
     img_B = dom_color[0]
     img_G = dom_color[1]
     img_R = dom_color[2]
 
     distance = np.absolute(target_R - img_R) + np.absolute(target_G - img_G) + np.absolute(target_B - img_B)
-    print(distance)
+    #print(distance)
+
 
 
     yellow = False      #par defaut la ligne n'est pas detectée
     if(distance<threshold_value):
         yellow = True
+
+
+    t = (e2 - e1)/cv.getTickFrequency()
+    print(t)
 
     return yellow              #return true si la distance est assez petite, cela signifie que la couleur est detectée, donc que la ligne d'arrivée est devant
 
@@ -52,7 +69,7 @@ nop = "nop"
 jpg = ".jpg"
 arrivee = "_arrivee_"
 txt=""
-for i in range(1,15):
+for i in range(1,9):
     if i<6:
         txt = str(i)+arrivee+nop+jpg
     else:

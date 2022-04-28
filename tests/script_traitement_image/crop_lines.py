@@ -28,7 +28,7 @@ def on_trackbar4(width):
     move()
 
 
-src1 = cv.imread(cv.samples.findFile("1_arrivee_ok.jpg"))
+src1 = cv.imread(cv.samples.findFile("10_arrivee_ok.jpg"))
 if src1 is None:
     print('Could not open or find the image: ')
     exit(0)

@@ -1,5 +1,5 @@
 import cv2 as cv
-
+import numpy as np
 
 class DDTA_CvImage(object):
 
@@ -41,4 +41,6 @@ class DDTA_CvImage(object):
         erosion = cv.erode(blackAndWhiteImage,kernel,iterations = 1)
         #erosion = cv.erode(blackAndWhiteImage,cv.MORPH_OPEN,kernel)
         
-        return erosion
+
+        webImage = np.concatenate((image, erosion), axis = 0)
+        return erosion, webImage

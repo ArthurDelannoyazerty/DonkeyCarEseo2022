@@ -41,4 +41,7 @@ class DDTA_CvImage(object):
         yellow = False      #par defaut la ligne n'est pas detectée
         if(distance<threshold_value):
             yellow = True
+        
+
+        
         return yellow

@@ -47,7 +47,7 @@ def loadImg(nom = "circuit_normal1.jpg"):
 
 while(1):
 	#read source image
-	img=loadImg("tests/script_traitement_image/8_arrivee_ok.jpg")
+	img=loadImg("C:\\Users\\ahdel\\projects\\enregistrement\\Green\\22_cam_image_array_.jpg")
 	#convert sourece image to HSC color mode
 	hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 

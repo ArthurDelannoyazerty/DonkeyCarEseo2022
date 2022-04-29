@@ -120,7 +120,7 @@ def erosion(img, type, size, iteration=1):
 
     cv.imshow("Erosion", erosion)
 
-    return dilatation, t
+    return erosion, t
 
 def gray2rgb(img):
     blured_edges = img

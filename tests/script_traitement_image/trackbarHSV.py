@@ -47,21 +47,17 @@ def loadImg(nom = "circuit_normal1.jpg"):
 
 while(1):
 	#read source image
-	img=loadImg("C:\\Users\\ahdel\\projects\\enregistrement\\Green\\22_cam_image_array_.jpg")
+	img=loadImg("C:/Users/ahdel/projects/DonkeyCarEseo2022/tests/script_traitement_image/vert1.png")
 	#convert sourece image to HSC color mode
 	hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
-	#
 	hsv_low = np.array([H_low, S_low, V_low], np.uint8)
 	hsv_high = np.array([H_high, S_high, V_high], np.uint8)
 
 	#making mask for hsv range
 	mask = cv2.inRange(hsv, hsv_low, hsv_high)
-	# print (mask)
 	#masking HSV value selected color becomes black
 	res = cv2.bitwise_and(img, img, mask=mask)
-
-
 
 	#show image
 	cv2.imshow('mask',mask)

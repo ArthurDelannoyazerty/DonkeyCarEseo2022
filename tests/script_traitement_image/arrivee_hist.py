@@ -133,6 +133,7 @@ def testYellow(threshold = 3, debug = False):
     masks, cuted, origin = yellow(debug)
     nbFail=0
     for i in range(len(masks)):
+        print(getPercentagePixelWhite(masks[i]))
         if(getPercentagePixelWhite(masks[i])<threshold):
             print("Il n'y a pas de jaune, il n'aurait pas du en detecter")
             cv.imshow("Original", origin[i])
@@ -158,7 +159,7 @@ def testNoYellow(threshold = 5, debug = False):
     return (nbFail*100)/len(masks)
 
 def green(debug = True,
-            pathGreen = "C:\\Users\\ahdel\\projects\\enregistrement\\Green"):
+            pathGreen = "C:\\Users\\ahdel\\projects\\enregistrement\\images"):
     valid_images = [".jpg",".gif",".png",".tga"]
     masks = []
     cuteds = []
@@ -179,13 +180,12 @@ def testGreen(threshold = 0.25, debug = False):
     masks, cuted, origin = green(debug)
     nbFail=0
     for i in range(len(masks)):
-        if(getPercentagePixelWhite(masks[i])<threshold):
-            print("Il n'y a pas de vert, il n'aurait pas du en detecter")
-            cv.imshow("Original", origin[i])
-            cv.imshow("Cuted", cuted[i])
-            cv.imshow("mask", masks[i])
-            cv.waitKey(0)
-            nbFail +=1
+        print("Il n'y a pas de vert, il n'aurait pas du en detecter")
+        cv.imshow("Original", origin[i])
+        cv.imshow("Cuted", cuted[i])
+        cv.imshow("mask", masks[i])
+        cv.waitKey(0)
+        nbFail +=1
     print("Nb fail green : "+str(nbFail)+ " over : "+str(len(masks)))
     return (nbFail*100)/len(masks)
 
@@ -193,34 +193,33 @@ def testNoGreen(threshold = 0.25, debug = False):
     masks, cuted, origin = green(debug, pathGreen = "C:\\Users\\ahdel\\projects\\enregistrement\\noGreen")
     nbFail=0
     for i in range(len(masks)):
-        if(getPercentagePixelWhite(masks[i])>threshold):
-            print("Il y a du vert, il n'aurait pas du le detecter")
-            cv.imshow("Original", origin[i])
-            cv.imshow("Cuted", cuted[i])
-            cv.imshow("mask", masks[i])
-            cv.waitKey(0)
-            nbFail +=1
+        print("Il y a du vert, il n'aurait pas du le detecter")
+        cv.imshow("Original", origin[i])
+        cv.imshow("Cuted", cuted[i])
+        cv.imshow("mask", masks[i])
+        cv.waitKey(0)
+        nbFail +=1
     print("Nb fail green : "+str(nbFail) + " over : "+str(len(masks)))
     return (nbFail*100)/len(masks)
 
 def printResultatTests():
-    print("testYellow")
-    percentageFailTestYellow = testYellow()
+    # print("testYellow")
+    # percentageFailTestYellow = testYellow()
 
-    print("testNoYellow")
-    percentageFailTestNoYellow = testNoYellow()
+    # print("testNoYellow")
+    # percentageFailTestNoYellow = testNoYellow()
 
     print("testGreen")
     percentageFailtestGreen = testGreen()
 
-    print("testYellow")
-    percentageFailtestNoGreen = testNoGreen()
+    # print("testYellow")
+    # percentageFailtestNoGreen = testNoGreen()
 
     print("Resultat tests")
-    print("testYellow : "+str(percentageFailTestYellow))
-    print("testNoYellow : "+str(percentageFailTestNoYellow))
+    # print("testYellow : "+str(percentageFailTestYellow))
+    # print("testNoYellow : "+str(percentageFailTestNoYellow))
     print("testGreen : "+str(percentageFailtestGreen))
-    print("testNoGreen : "+str(percentageFailtestNoGreen))
+    # print("testNoGreen : "+str(percentageFailtestNoGreen))
 
     print("Il y a beaucoup d'erreur dans yellow et green car le treshold limite les image non conformes (genre ligne trop loin), aussi il y a beaucoup moins de photo dans yellow et green que dans noYellow et noGreen")
 
